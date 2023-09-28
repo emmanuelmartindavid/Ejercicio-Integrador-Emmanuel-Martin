@@ -53,7 +53,6 @@ namespace MiCalculadora
                 isSystem = IsSystem.Decimal;
                 SetResult();
             }
-
         }
 
         private void rbBinary_CheckedChanged(object sender, EventArgs e)
@@ -77,16 +76,23 @@ namespace MiCalculadora
 
         private void btnOperate_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtFirstOperand.Text) && !string.IsNullOrWhiteSpace(txtSecondOperand.Text))
+            if (Validator.ValidatesConvertion(txtFirstOperand.Text) && Validator.ValidatesConvertion(txtSecondOperand.Text))
             {
                 char operand = char.Parse(cboOperations.SelectedItem.ToString()!);
-                calculator = new Operation(firstOperand, secondOperand);
-                result = calculator.Operate(operand);
-                SetResult();
+                if (!Validator.ValidatesDivideerZero(operand, txtSecondOperand.Text))
+                {
+                    calculator = new Operation(firstOperand, secondOperand);
+                    result = calculator.Operate(operand);
+                    SetResult();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo realizar la operación. \nNo se puede dividir por cero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show("No se pudo realizar la operación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo realizar la operación. \nDebe completar los operandos correctamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -94,8 +100,19 @@ namespace MiCalculadora
         {
             if (result is not null)
             {
-                lblResultShowed.Text = result.ConvertTo(isSystem);
+                 lblResultShowed.Text = result.ConvertTo(isSystem);
+               /* if (Validator.ValidatesBinaryConvertion(result.ConvertTo(isSystem), isSystem))
+                {
+                    lblResultShowed.Text = result.ConvertTo(isSystem);
+
+                }
+                else
+                {
+                    lblResultShowed.Text = "Valor inválido. No hay numeros binarios negativos.";
+                }*/
+
             }
+
         }
     }
 }

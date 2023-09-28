@@ -13,7 +13,6 @@ namespace MiCalculadora
         public FrmCalculadora()
         {
             InitializeComponent();
-
         }
 
         private void FrmCalculadora_Load(object sender, EventArgs e)
@@ -100,19 +99,15 @@ namespace MiCalculadora
         {
             if (result is not null)
             {
-                 lblResultShowed.Text = result.ConvertTo(isSystem);
-               /* if (Validator.ValidatesBinaryConvertion(result.ConvertTo(isSystem), isSystem))
+                if (Validator.ValidatesNegativeBinary(result.ConvertTo(isSystem), isSystem))
                 {
-                    lblResultShowed.Text = result.ConvertTo(isSystem);
-
+                    lblResultShowed.Text = "No hay numeros binarios negativos.";
                 }
                 else
                 {
-                    lblResultShowed.Text = "Valor inválido. No hay numeros binarios negativos.";
-                }*/
-
+                    lblResultShowed.Text = result.ConvertTo(isSystem);
+                }
             }
-
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Entidades
             double convertedNumber;
             double baseNumber = 1;
 
-            if (IsBinary(number))
+            if (!string.IsNullOrEmpty(number) && IsBinary(number))
             {
                 convertedNumber = double.Parse(number);
                 while (convertedNumber > 0)
@@ -149,12 +149,22 @@ namespace Entidades
 
         public static bool operator ==(Numeration numeration1, Numeration numeration2)
         {
-            return numeration1._numericValue == numeration2._numericValue;
+            return numeration1.IsSystem == numeration2.IsSystem;
         }
 
         public static bool operator !=(Numeration numeration1, Numeration numeration2)
         {
             return !(numeration1 == numeration2);
+        }
+
+        public static bool operator ==(IsSystem isSystem, Numeration numeration)
+        {
+            return isSystem == numeration._isSystem;
+        }
+
+        public static bool operator !=(IsSystem isSystem, Numeration numeration)
+        {
+            return !(isSystem == numeration);
         }
     }
 }

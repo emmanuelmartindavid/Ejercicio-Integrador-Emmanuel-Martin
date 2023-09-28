@@ -9,6 +9,7 @@ namespace MiCalculadora
         Numeration secondOperand;
         Numeration result;
         IsSystem isSystem;
+        bool flag = false;
         public FrmCalculadora()
         {
             InitializeComponent();
@@ -32,13 +33,14 @@ namespace MiCalculadora
         {
             if (MessageBox.Show("¿Desea cerrar la calculadora?", "Cierre", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                flag = true;
                 this.Close();
             }
         }
 
         private void FrmCalculadora_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("¿Desea cerrar la calculadora?", "Cierre", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if (!flag && MessageBox.Show("¿Desea cerrar la calculadora?", "Cierre", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 e.Cancel = true;
             }
@@ -49,23 +51,19 @@ namespace MiCalculadora
             if (rbDecimal.Checked)
             {
                 isSystem = IsSystem.Decimal;
+                SetResult();
             }
-            else
-            {
-                isSystem = IsSystem.Binary;
-            }
+
         }
 
         private void rbBinary_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbBinary.Checked) 
+            if (rbBinary.Checked)
             {
-                isSystem = IsSystem.Binary; 
+                isSystem = IsSystem.Binary;
+                SetResult();
             }
-            else
-            {
-                isSystem = IsSystem.Decimal; 
-            }
+
         }
 
         private void txtFirstOperand_TextChanged(object sender, EventArgs e)
@@ -88,8 +86,17 @@ namespace MiCalculadora
         {
             char operand = char.Parse(cboOperations.SelectedItem.ToString()!);
             calculator = new Operation(firstOperand, secondOperand);
-            result = new ((double)calculator.Operate(operand), isSystem);
-            lblResultShowed.Text = result.Value;
+
+            result = calculator.Operate(operand);
+            SetResult();
+        }
+
+        private void SetResult()
+        {
+            if (result is not null)
+            {
+                lblResultShowed.Text = result.ConvertTo(isSystem);
+            }
         }
     }
 }

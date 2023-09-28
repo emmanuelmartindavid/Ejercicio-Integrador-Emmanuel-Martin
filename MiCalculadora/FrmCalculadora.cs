@@ -4,11 +4,11 @@ namespace MiCalculadora
 {
     public partial class FrmCalculadora : Form
     {
-        Operation calculator;
-        Numeration firstOperand;
-        Numeration secondOperand;
-        Numeration result;
-        IsSystem isSystem;
+        private Operation calculator;
+        private Numeration firstOperand;
+        private Numeration secondOperand;
+        private Numeration result;
+        private IsSystem isSystem;
         bool flag = false;
         public FrmCalculadora()
         {
@@ -63,32 +63,31 @@ namespace MiCalculadora
                 isSystem = IsSystem.Binary;
                 SetResult();
             }
-
         }
 
         private void txtFirstOperand_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtFirstOperand.Text))
-            {
-                firstOperand = new Numeration(txtFirstOperand.Text, isSystem);
-            }
+            firstOperand = new Numeration(txtFirstOperand.Text, isSystem);
         }
 
         private void txtSecondOperand_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtSecondOperand.Text))
-            {
-                secondOperand = new Numeration(txtSecondOperand.Text, isSystem);
-            }
+            secondOperand = new Numeration(txtSecondOperand.Text, isSystem);
         }
 
         private void btnOperate_Click(object sender, EventArgs e)
         {
-            char operand = char.Parse(cboOperations.SelectedItem.ToString()!);
-            calculator = new Operation(firstOperand, secondOperand);
-
-            result = calculator.Operate(operand);
-            SetResult();
+            if (!string.IsNullOrWhiteSpace(txtFirstOperand.Text) && !string.IsNullOrWhiteSpace(txtSecondOperand.Text))
+            {
+                char operand = char.Parse(cboOperations.SelectedItem.ToString()!);
+                calculator = new Operation(firstOperand, secondOperand);
+                result = calculator.Operate(operand);
+                SetResult();
+            }
+            else
+            {
+                MessageBox.Show("No se pudo realizar la operación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SetResult()

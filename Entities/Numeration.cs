@@ -28,7 +28,8 @@ namespace Entidades
         {
             get
             {
-                return ConvertTo(this._isSystem);
+                // return ConvertTo(this._isSystem);
+                return this._numericValue.ToString();
             }
         }
         public Numeration(double numericValue, IsSystem isSystem) : this(numericValue.ToString(), isSystem)
@@ -38,7 +39,7 @@ namespace Entidades
         {
             InitializeValues(numericValue, isSystem);
         }
-        public string ConvertDecimalToBinary(double number)
+        public static string ConvertDecimalToBinary(double number)
         {
             string binary = "";
             if (number == 0)
@@ -54,7 +55,7 @@ namespace Entidades
             return binary;
         }
 
-        public double ConvertBinaryToDecimal(string number)
+        public static double ConvertBinaryToDecimal(string number)
         {
             double decimalNumber = 0;
             double convertedNumber;
@@ -88,7 +89,7 @@ namespace Entidades
             }
             return result;
         }
-        private bool IsBinary(string number)
+        private static bool IsBinary(string number)
         {
             bool result = true;
             foreach (char item in number)
@@ -124,21 +125,6 @@ namespace Entidades
         public static explicit operator double(Numeration numeration)
         {
             return numeration._numericValue;
-        }
-
-        public static explicit operator string(Numeration numeration)
-        {
-            return numeration._numericValue.ToString();
-        }
-
-        public static implicit operator Numeration(double numericValue)
-        {
-            return new Numeration(numericValue, IsSystem.Decimal);
-        }
-
-        public static implicit operator Numeration(string numericValue)
-        {
-            return new Numeration(double.Parse(numericValue), IsSystem.Decimal);
         }
 
         public static Numeration operator +(Numeration numeration1, Numeration numeration2)

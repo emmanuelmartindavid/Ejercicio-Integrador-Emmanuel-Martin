@@ -116,6 +116,7 @@ namespace MiCalculadora
                 {
                     calculator = new Operation(firstOperand, secondOperand);
                     result = calculator.Operate(operand);
+
                     SetResult();
                 }
                 else
@@ -141,7 +142,7 @@ namespace MiCalculadora
                 }
                 else
                 {
-                    lblResultShowed.Text = result.ConvertTo(isSystem);
+                    lblResultShowed.Text = result.ConvertTo(isSystem);                
                 }
             }
         }

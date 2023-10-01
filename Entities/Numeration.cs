@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
+    /// <summary>
+    /// Enumerado, distingue el tipo de sistema numerico.
+    /// </summary>
     public enum IsSystem
     {
         Decimal,
         Binary,
     }
     /// <summary>
-    /// Clase que representa un número en un sistema numérico determinado.
+    /// Clase que representa un número en un sistema numérico determinado, binario o decimal.
     /// </summary>
     public class Numeration
     {
@@ -37,7 +40,6 @@ namespace Entidades
         {
             get
             {
-                // return ConvertTo(this._isSystem);
                 return this._numericValue.ToString();
             }
         }
@@ -50,6 +52,7 @@ namespace Entidades
         public Numeration(double numericValue, IsSystem isSystem) : this(numericValue.ToString(), isSystem)
         {
             this._isSystem = isSystem;
+
         }
 
         /// <summary>
@@ -67,21 +70,6 @@ namespace Entidades
         /// </summary>
         /// <param name="number">El número decimal a convertir.</param>
         /// <returns>La representación en binario del número decimal.</returns>
-      /*  public static string ConvertDecimalToBinary(int number)
-        {
-            string binary = "";
-            if (number == 0)
-            {
-                binary = "0";
-            }
-            while (number > 0)
-            {
-                int rest = number % 2;
-                binary = rest + binary;
-                number /= 2;
-            }
-            return binary;
-        }*/
         public static string ConvertDecimalToBinary(int number)
         {
             string binary = "";
@@ -164,6 +152,7 @@ namespace Entidades
             {
                 result = this._numericValue.ToString();
             }
+            
             return result;
         }
         /// <summary>
@@ -274,7 +263,6 @@ namespace Entidades
         {
             return isSystem == numeration._isSystem;
         }
-
         /// <summary>
         /// Sobrecarga del operador de desigualdad para la clase Numeration.
         /// </summary>
